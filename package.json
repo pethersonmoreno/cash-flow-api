@@ -1,0 +1,28 @@
+{
+  "name": "cash-flow-api",
+  "version": "0.0.1",
+  "description": "Cash Flow API for personal use",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pethersonmoreno/cash-flow-api.git"
+  },
+  "keywords": [
+    "cash",
+    "flow",
+    "cost",
+    "money"
+  ],
+  "author": "Petherson Moreno",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pethersonmoreno/cash-flow-api/issues"
+  },
+  "homepage": "https://github.com/pethersonmoreno/cash-flow-api#readme",
+  "dependencies": {
+    "koa": "^2.11.0"
+  }
+}
