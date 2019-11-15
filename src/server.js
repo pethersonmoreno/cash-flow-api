@@ -12,7 +12,9 @@ const app = new Koa();
 
 app.use(bodyParser());
 
-peopleRoutes.map(({ path, method, handler }) => app.use(koaRouter[method](path, handler)));
+peopleRoutes.map(({ path, method, handler }) =>
+  app.use(koaRouter[method](path, handler))
+);
 
 app.use(
   koaRouter.get('/', async ctx => {
@@ -20,8 +22,10 @@ app.use(
   })
 );
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server started http://localhost:${port}`);
 });
+
+module.exports = server;
