@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/pethersonmoreno/cash-flow-api#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "firebase": "^7.4.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
