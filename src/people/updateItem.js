@@ -5,7 +5,7 @@ const schema = require ('../schemas/person');
 const updateItem = async (req, res) => {
   const { id } = req.params;
   if (await documentExists('people', id)) {
-    res.status(404).send('Not found');
+    return res.status(404).send('Not found');
   }
   const { error, item } = schema.validate(req.body);
   if(error){
