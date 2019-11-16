@@ -16,6 +16,14 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
+// app.use(async (req, res, next) => {
+//   try {
+//     return await next(req, res);
+//   } catch (error) {
+//     return res.status(500).send(`Internal error server`);
+//   }
+// });
+
 peopleRoutes.map(({ path, method, handler }) => router[method](path, handler));
 
 router.get('/', (req, res) => {
