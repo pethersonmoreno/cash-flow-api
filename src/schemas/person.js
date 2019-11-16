@@ -1,5 +1,5 @@
-const Joi = require('happy/joi');
+const Joi = require('@hapi/joi');
 
 module.exports=Joi.object({
-  name: joi.string().required()
+  name: Joi.string().required()
 });
