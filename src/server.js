@@ -25,11 +25,11 @@ app.use('/', router);
 
 const port = process.env.PORT || 3000;
 
-const server = app.listen(port, () => {
-  if (!process.env.FIREBASE_SERVE) {
+if (!process.env.FIREBASE_SERVE) {
+  app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`Server started http://localhost:${port}`);
-  }
-});
+  });
+}
 
-module.exports = server;
+module.exports = app;
