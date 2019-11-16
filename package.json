@@ -1,10 +1,11 @@
 {
   "name": "cash-flow-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cash Flow API for personal use",
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.js",
+    "lint": "eslint .",
     "test": "jest"
   },
   "repository": {
@@ -24,15 +25,15 @@
   },
   "homepage": "https://github.com/pethersonmoreno/cash-flow-api#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "firebase": "^7.4.0",
-    "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-route": "^3.2.0"
+    "express": "^4.17.1",
+    "firebase": "^7.4.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
     "nodemon": "^1.19.4"
   }
