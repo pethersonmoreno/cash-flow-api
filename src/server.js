@@ -1,9 +1,9 @@
 const firebase = require('firebase/app');
 require('firebase/firestore');
 require('dotenv').config();
-const Koa = require('koa');
-const koaRouter = require('koa-route');
-const bodyParser = require('koa-bodyparser');
+const express = require('express');
+const bodyParser = require('body-parser');
+
 const peopleRoutes = require('./people/routes');
 
 firebase.initializeApp({
@@ -11,17 +11,17 @@ firebase.initializeApp({
   projectId: process.env.FIREBASE_PROJECT_ID
 });
 
-const app = new Koa();
+const app = express();
+const router = express.Router();
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 
-peopleRoutes.map(({ path, method, handler }) => app.use(koaRouter[method](path, handler)));
+peopleRoutes.map(({ path, method, handler }) => router[method](path, handler));
 
-app.use(
-  koaRouter.get('/', async ctx => {
-    ctx.body = 'index test';
-  })
-);
+router.get('/', (req, res) => {
+  res.send('index test');
+});
+app.use('/', router);
 
 const port = process.env.PORT || 3000;
 

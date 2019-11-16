@@ -1,14 +1,12 @@
-// const firebase = require('firebase/app');
+const addDocument = require('../infra/firestore/addDocument');
 
-const createItem = async ctx => {
-  // const db = firebase.firestore();
-  const item = { ...ctx.request.body };
-  const id = 'testing';
-  // const { id } = await db.collection('people').add(item);
-  ctx.body = {
+const createItem = async (req, res) => {
+  const item = { ...req.body };
+  const { id } = await addDocument('people', item);
+  res.json({
     id,
     ...item
-  };
+  });
 };
 
 module.exports = createItem;
