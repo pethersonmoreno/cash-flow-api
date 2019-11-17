@@ -1,4 +1,4 @@
-const idSchema = require('../../schemas/id');
+const idSchema = require('../../../schemas/id');
 
 module.exports = {
   params: {
