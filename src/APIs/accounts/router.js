@@ -7,25 +7,25 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(validate(validations.listAccounts), controller.listAccounts)
+  .get(validate(validations.listAccounts), controller.common.list)
   .post(
     validate(validations.createAccount),
     controller.blockNotFoundPerson,
-    controller.createAccount
+    controller.common.create
   );
 
 router
   .route('/:id')
   .get(
     validate(validations.getAccount),
-    controller.loadAccount('id'),
-    controller.getAccount
+    controller.common.load('id'),
+    controller.common.get
   )
   .put(
     validate(validations.replaceAccount),
-    controller.loadAccount('id'),
+    controller.common.load('id'),
     controller.blockNotFoundPerson,
-    controller.replaceAccount
+    controller.common.replace
   );
 
 module.exports = router;

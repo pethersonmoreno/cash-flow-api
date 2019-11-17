@@ -7,20 +7,20 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(validate(validations.listPeople), controller.listPeople)
-  .post(validate(validations.createPerson), controller.createPerson);
+  .get(validate(validations.listPeople), controller.common.list)
+  .post(validate(validations.createPerson), controller.common.create);
 
 router
   .route('/:id')
   .get(
     validate(validations.getPerson),
-    controller.loadPerson('id'),
-    controller.getPerson
+    controller.common.load('id'),
+    controller.common.get
   )
   .put(
     validate(validations.replacePerson),
-    controller.loadPerson('id'),
-    controller.replacePerson
+    controller.common.load('id'),
+    controller.common.replace
   );
 
 module.exports = router;
