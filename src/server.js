@@ -6,11 +6,11 @@ const express = require('express');
 require('express-async-errors');
 const bodyParser = require('body-parser');
 
-const notFoundMiddleware = require('./api/middlewares/notFoundMiddleware');
-const errorConverterMiddleware = require('./api/middlewares/errorConverterMiddleware');
-const errorMiddleware = require('./api/middlewares/errorMiddleware');
+const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
+const errorConverterMiddleware = require('./middlewares/errorConverterMiddleware');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
-const peopleRouter = require('./api/people');
+const peopleRouter = require('./APIs/people');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
