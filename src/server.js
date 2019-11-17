@@ -10,7 +10,7 @@ const notFoundMiddleware = require('./api/middlewares/notFoundMiddleware');
 const errorConverterMiddleware = require('./api/middlewares/errorConverterMiddleware');
 const errorMiddleware = require('./api/middlewares/errorMiddleware');
 
-const peopleRouter = require('./api/people/router');
+const peopleRouter = require('./api/people');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
