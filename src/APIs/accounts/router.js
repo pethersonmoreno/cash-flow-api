@@ -7,9 +7,9 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(validate(validations.listAccounts), controller.common.list)
+  .get(validate(validations.list), controller.common.list)
   .post(
-    validate(validations.createAccount),
+    validate(validations.create),
     controller.blockNotFoundPerson,
     controller.common.create
   );
@@ -17,12 +17,12 @@ router
 router
   .route('/:id')
   .get(
-    validate(validations.getAccount),
+    validate(validations.get),
     controller.common.load('id'),
     controller.common.get
   )
   .put(
-    validate(validations.replaceAccount),
+    validate(validations.replace),
     controller.common.load('id'),
     controller.blockNotFoundPerson,
     controller.common.replace

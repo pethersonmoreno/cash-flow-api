@@ -7,18 +7,18 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(validate(validations.listPeople), controller.common.list)
-  .post(validate(validations.createPerson), controller.common.create);
+  .get(validate(validations.list), controller.common.list)
+  .post(validate(validations.create), controller.common.create);
 
 router
   .route('/:id')
   .get(
-    validate(validations.getPerson),
+    validate(validations.get),
     controller.common.load('id'),
     controller.common.get
   )
   .put(
-    validate(validations.replacePerson),
+    validate(validations.replace),
     controller.common.load('id'),
     controller.common.replace
   );
