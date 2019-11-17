@@ -1,3 +1,4 @@
+require('module-alias/register');
 const firebase = require('firebase/app');
 require('firebase/firestore');
 require('dotenv').config();
@@ -5,9 +6,11 @@ const express = require('express');
 require('express-async-errors');
 const bodyParser = require('body-parser');
 
-const unhandledError = require('./middlewares/unhandledError');
+const notFoundMiddleware = require('./api/middlewares/notFoundMiddleware');
+const errorConverterMiddleware = require('./api/middlewares/errorConverterMiddleware');
+const errorMiddleware = require('./api/middlewares/errorMiddleware');
 
-const peopleRoutes = require('./people/routes');
+const peopleRouter = require('./api/people/router');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
@@ -19,13 +22,16 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
-peopleRoutes.map(({ path, method, handler }) => router[method](path, handler));
+app.use('/people', peopleRouter);
 
 router.get('/', (req, res) => {
   res.send('index test');
 });
 app.use('/', router);
-app.use(unhandledError);
+
+app.use(notFoundMiddleware);
+app.use(errorConverterMiddleware);
+app.use(errorMiddleware);
 
 const port = process.env.PORT || 3000;
 
