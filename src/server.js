@@ -11,6 +11,7 @@ const errorConverterMiddleware = require('./middlewares/errorConverterMiddleware
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const peopleRouter = require('./APIs/people');
+const accountsRouter = require('./APIs/accounts');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
@@ -23,6 +24,7 @@ const router = express.Router();
 app.use(bodyParser.json());
 
 app.use('/people', peopleRouter);
+app.use('/accounts', accountsRouter);
 
 router.get('/', (req, res) => {
   res.send('index test');
