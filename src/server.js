@@ -12,6 +12,7 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const peopleRouter = require('./APIs/people');
 const accountsRouter = require('./APIs/accounts');
+const cashFlowDescriptionsRouter = require('./APIs/cashFlowDescriptions');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 app.use('/people', peopleRouter);
 app.use('/accounts', accountsRouter);
+app.use('/cashFlowDescriptions', cashFlowDescriptionsRouter);
 
 router.get('/', (req, res) => {
   res.send('index test');
