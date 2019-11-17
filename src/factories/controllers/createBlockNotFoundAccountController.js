@@ -39,14 +39,16 @@ const createBlockNotFoundAccountController = (
     return next();
   }
   try {
-    const accountDoc = await getDocument('accounts', req.body.accountId);
+    const accountDoc = await getDocument('accounts', req.body[accountIdField]);
     if (!accountDoc.exists) {
       throw new ValidationError({
         errors: [
           {
-            field: ['accountId'],
+            field: [accountIdField],
             location: 'body',
-            messages: [`Not found account with id "${req.body.accountId}"`],
+            messages: [
+              `Not found account with id "${req.body[accountIdField]}"`
+            ],
             types: []
           }
         ]
