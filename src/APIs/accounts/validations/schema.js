@@ -6,5 +6,6 @@ module.exports = {
   description: Joi.string()
     .min(3)
     .max(30)
-    .required()
+    .required(),
+  currentValue: Joi.number().required()
 };
