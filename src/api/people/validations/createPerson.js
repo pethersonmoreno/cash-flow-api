@@ -1,4 +1,4 @@
-const person = require('./person');
+const person = require('./personSchema');
 
 module.exports = {
   body: person
