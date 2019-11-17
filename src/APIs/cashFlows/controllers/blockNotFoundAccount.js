@@ -4,12 +4,14 @@ const getDocument = require('../../../helpers/firestore/getDocument');
 const ValidationError = require('../../../errors/ValidationError');
 const mapDocumentToData = require('../../../mappers/documentToData');
 
-const isUpdateNotChangingAccount = req => req.locals &&
+const isUpdateNotChangingAccountData = req => req.locals &&
   req.locals[LOCAL_NAME] &&
-  req.locals[LOCAL_NAME].accountId === req.body.accountId;
+  req.locals[LOCAL_NAME].accountId === req.body.accountId &&
+  req.locals[LOCAL_NAME].value === req.body.value &&
+  req.locals[LOCAL_NAME].inOut === req.body.inOut;
 
 const blockNotFoundAccount = async (req, res, next) => {
-  if (isUpdateNotChangingAccount(req)) {
+  if (isUpdateNotChangingAccountData(req)) {
     return next();
   }
   try {

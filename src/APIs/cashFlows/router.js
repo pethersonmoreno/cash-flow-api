@@ -12,7 +12,9 @@ router
     validate(validations.create),
     controller.blockNotFoundAccount,
     controller.blockNotFoundCashFlowDescription,
-    controller.common.create
+    controller.updateAccountCurrentValue,
+    controller.common.create,
+    controller.undoUpdateAccountCurrentValueOnError
   );
 
 router
@@ -27,7 +29,9 @@ router
     controller.common.load('id'),
     controller.blockNotFoundAccount,
     controller.blockNotFoundCashFlowDescription,
-    controller.common.replace
+    controller.updateAccountCurrentValue,
+    controller.common.replace,
+    controller.undoUpdateAccountCurrentValueOnError
   );
 
 module.exports = router;
