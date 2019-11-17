@@ -1,5 +1,8 @@
 /* eslint-disable require-atomic-updates */
 const { LOCAL_NAME, inOut } = require('../constants');
+const getDocument = require('../../../helpers/firestore/getDocument');
+const ValidationError = require('../../../errors/ValidationError');
+const mapDocumentToData = require('../../../mappers/documentToData');
 const updateDocument = require('../../../helpers/firestore/updateDocument');
 
 const isUpdate = req => req.locals && req.locals[LOCAL_NAME];
@@ -8,21 +11,56 @@ const isUpdateNotChangingValue = req => isUpdate(req) &&
   req.locals[LOCAL_NAME].value === req.body.value &&
   req.locals[LOCAL_NAME].inOut === req.body.inOut;
 
+const getOldAccountById = async oldAccountId => {
+  const accountDoc = await getDocument('accounts', oldAccountId);
+  if (!accountDoc.exists) {
+    throw new ValidationError({
+      errors: [
+        {
+          field: ['accountId'],
+          location: 'body',
+          messages: [`Not found old account with id "${oldAccountId}"`],
+          types: []
+        }
+      ]
+    });
+  }
+  return mapDocumentToData(accountDoc);
+};
+
 const updateAccountCurrentValue = async (req, res, next) => {
   if (isUpdateNotChangingValue(req)) {
     return next();
   }
   try {
-    const { account } = req.locals;
-    let valueDiff = req.body.value * (req.body.inOut === inOut.INPUT ? 1 : -1);
-    if (isUpdate(req)) {
-      valueDiff -=
-        req.locals[LOCAL_NAME].value *
-        (req.locals[LOCAL_NAME].inOut === inOut.INPUT ? 1 : -1);
+    const updated = isUpdate(req);
+    const changedAccountReference =
+      updated && req.locals[LOCAL_NAME].accountId !== req.body.accountId;
+
+    const { account: accountCurrent } = req.locals;
+    const valueDiffCurrent =
+      req.body.value * (req.body.inOut === inOut.INPUT ? 1 : -1);
+    const valueDiffOld = updated
+      ? req.locals[LOCAL_NAME].value *
+        (req.locals[LOCAL_NAME].inOut === inOut.INPUT ? 1 : -1)
+      : 0;
+    if (changedAccountReference) {
+      const accountOld = await getOldAccountById(
+        req.locals[LOCAL_NAME].accountId
+      );
+      req.locals.accountOld = accountOld;
+      await updateDocument('accounts', accountOld.id, {
+        currentValue: accountOld.currentValue - valueDiffOld
+      });
+      await updateDocument('accounts', accountCurrent.id, {
+        currentValue: accountCurrent.currentValue + valueDiffCurrent
+      });
+    } else {
+      const valueDiff = valueDiffCurrent - valueDiffOld;
+      await updateDocument('accounts', accountCurrent.id, {
+        currentValue: accountCurrent.currentValue + valueDiff
+      });
     }
-    await updateDocument('accounts', account.id, {
-      currentValue: account.currentValue + valueDiff
-    });
     req.locals.updatedAccount = true;
     return next();
   } catch (error) {
