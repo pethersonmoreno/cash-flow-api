@@ -2,7 +2,10 @@ const firebase = require('firebase/app');
 require('firebase/firestore');
 require('dotenv').config();
 const express = require('express');
+require('express-async-errors');
 const bodyParser = require('body-parser');
+
+const unhandledError = require('./middlewares/unhandledError');
 
 const peopleRoutes = require('./people/routes');
 
@@ -16,20 +19,13 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
-// app.use(async (req, res, next) => {
-//   try {
-//     return await next(req, res);
-//   } catch (error) {
-//     return res.status(500).send(`Internal error server`);
-//   }
-// });
-
 peopleRoutes.map(({ path, method, handler }) => router[method](path, handler));
 
 router.get('/', (req, res) => {
   res.send('index test');
 });
 app.use('/', router);
+app.use(unhandledError);
 
 const port = process.env.PORT || 3000;
 
