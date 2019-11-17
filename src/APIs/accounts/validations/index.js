@@ -1,11 +1,11 @@
-const listAccounts = require('./listAccounts');
-const getAccount = require('./getAccount');
-const createAccount = require('./createAccount');
-const replaceAccount = require('./replaceAccount');
+const list = require('./list');
+const get = require('./get');
+const create = require('./create');
+const replace = require('./replace');
 
 module.exports = {
-  listAccounts,
-  getAccount,
-  createAccount,
-  replaceAccount
+  list,
+  get,
+  create,
+  replace
 };

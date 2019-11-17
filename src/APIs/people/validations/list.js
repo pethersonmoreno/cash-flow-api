@@ -6,5 +6,8 @@ module.exports = {
     perPage: Joi.number()
       .min(1)
       .max(100)
+  },
+  options: {
+    allowUnknownQuery: false
   }
 };

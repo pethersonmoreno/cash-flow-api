@@ -1,11 +1,11 @@
-const listPeople = require('./listPeople');
-const getPerson = require('./getPerson');
-const createPerson = require('./createPerson');
-const replacePerson = require('./replacePerson');
+const list = require('./list');
+const get = require('./get');
+const create = require('./create');
+const replace = require('./replace');
 
 module.exports = {
-  listPeople,
-  getPerson,
-  createPerson,
-  replacePerson
+  list,
+  get,
+  create,
+  replace
 };
