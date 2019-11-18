@@ -1,5 +1,6 @@
 /* eslint-disable require-atomic-updates */
-const { LOCAL_NAME, inOut } = require('../constants');
+const { LOCAL_NAME } = require('../constants');
+const CashFlowInOutEnum = require('../../../enums/CashFlowInOutEnum');
 const getDocument = require('../../../helpers/firestore/getDocument');
 const ValidationError = require('../../../errors/ValidationError');
 const mapDocumentToData = require('../../../mappers/documentToData');
@@ -39,10 +40,10 @@ const updateAccountCurrentValue = async (req, res, next) => {
 
     const { account: accountCurrent } = req.locals;
     const valueDiffCurrent =
-      req.body.value * (req.body.inOut === inOut.INPUT ? 1 : -1);
+      req.body.value * (req.body.inOut === CashFlowInOutEnum.INPUT ? 1 : -1);
     const valueDiffOld = updated
       ? req.locals[LOCAL_NAME].value *
-        (req.locals[LOCAL_NAME].inOut === inOut.INPUT ? 1 : -1)
+        (req.locals[LOCAL_NAME].inOut === CashFlowInOutEnum.INPUT ? 1 : -1)
       : 0;
     if (changedAccountReference) {
       const accountOld = await getOldAccountById(

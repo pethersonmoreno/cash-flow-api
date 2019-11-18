@@ -1,7 +1,7 @@
 /* eslint-disable require-atomic-updates */
 const getDocument = require('../../helpers/firestore/getDocument');
 const ValidationError = require('../../errors/ValidationError');
-const mapDocumentToData = require('../../mappers/documentToData');
+const mapDocumentToDataDefault = require('../../mappers/documentToData');
 
 const isUpdateNotChangingCashFlowDescription = (
   req,
@@ -14,7 +14,8 @@ const isUpdateNotChangingCashFlowDescription = (
 
 const createBlockNotFoundCashFlowDescriptionController = (
   localName,
-  cashFlowDescriptionIdField
+  cashFlowDescriptionIdField,
+  mapDocumentToData = mapDocumentToDataDefault
 ) => async (req, res, next) => {
   const notLoadAndVerifyCashFlowDescription = isUpdateNotChangingCashFlowDescription(
     req,

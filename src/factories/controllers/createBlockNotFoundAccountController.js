@@ -1,7 +1,7 @@
 /* eslint-disable require-atomic-updates */
 const getDocument = require('../../helpers/firestore/getDocument');
 const ValidationError = require('../../errors/ValidationError');
-const mapDocumentToData = require('../../mappers/documentToData');
+const mapDocumentToDataDefault = require('../../mappers/documentToData');
 
 const isUpdateNotChangingAccountData = (
   req,
@@ -27,7 +27,8 @@ const isUpdateNotChangingAccountData = (
 const createBlockNotFoundAccountController = (
   localName,
   accountIdField,
-  otherFieldsToLoadAccount = []
+  otherFieldsToLoadAccount = [],
+  mapDocumentToData = mapDocumentToDataDefault
 ) => async (req, res, next) => {
   const notLoadAndVerifyAccount = isUpdateNotChangingAccountData(
     req,

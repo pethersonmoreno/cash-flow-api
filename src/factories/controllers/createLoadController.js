@@ -1,11 +1,11 @@
 /* eslint-disable require-atomic-updates */
 const NotFoundError = require('../../errors/NotFoundError');
 const getDocument = require('../../helpers/firestore/getDocument');
-const mapDocumentToData = require('../../mappers/documentToData');
 
 const createLoadController = (
   collationName,
-  localName
+  localName,
+  mapDocumentToData
 ) => paramRouteName => async (req, res, next) => {
   const { [paramRouteName]: id } = req.params;
   try {
