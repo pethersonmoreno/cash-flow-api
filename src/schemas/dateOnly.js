@@ -17,6 +17,4 @@ const regex = new RegExp(
   `^((${allMonthsWith31thDayRegex})|(${allMonthsWith30thDayRegex})|(${allMonthsWith28thDayRegex})|(${allFebruaryMonthsWith29thDayRegex}))$`
 );
 
-module.exports = Joi.string()
-  .regex(regex, 'date only')
-  .required();
+module.exports = Joi.string().regex(regex, 'date only');
