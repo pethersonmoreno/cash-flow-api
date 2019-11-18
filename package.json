@@ -2,7 +2,7 @@
   "name": "cash-flow-api",
   "version": "0.0.2",
   "description": "Cash Flow API for personal use",
-  "main": "src/server.js",
+  "main": "src/firebaseFunctions.js",
   "scripts": {
     "start": "nodemon src/server.js",
     "lint": "eslint .",
