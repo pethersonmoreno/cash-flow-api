@@ -6,7 +6,14 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "npm run deploy:functions",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "predeploy": "npm run lint",
+    "deploy:all": "firebase deploy",
+    "deploy:functions": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
   "repository": {
     "type": "git",
