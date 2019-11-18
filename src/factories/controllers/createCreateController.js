@@ -1,7 +1,11 @@
 const addDocument = require('../../helpers/firestore/addDocument');
 
-const createCreateController = collationName => async (req, res) => {
-  const { id } = await addDocument(collationName, req.body);
+const createCreateController = (collationName, mapDataToDocument) => async (
+  req,
+  res
+) => {
+  const documentData = mapDataToDocument(req.body);
+  const { id } = await addDocument(collationName, documentData);
   return res.json({ id, ...req.body });
 };
 

@@ -1,13 +1,15 @@
 const replaceDocument = require('../../helpers/firestore/replaceDocument');
 
-const createReplaceController = (collationName, localName) => async (
-  req,
-  res
-) => {
+const createReplaceController = (
+  collationName,
+  localName,
+  mapDataToDocument
+) => async (req, res) => {
   const {
     [localName]: { id }
   } = req.locals;
-  await replaceDocument(collationName, id, req.body);
+  const documentData = mapDataToDocument(req.body);
+  await replaceDocument(collationName, id, documentData);
   return res.json({ id, ...req.body });
 };
 
