@@ -14,6 +14,7 @@ const peopleRouter = require('./APIs/people');
 const accountsRouter = require('./APIs/accounts');
 const cashFlowDescriptionsRouter = require('./APIs/cashFlowDescriptions');
 const cashFlowsRouter = require('./APIs/cashFlows');
+const cashFlowSchedulesRouter = require('./APIs/cashFlowSchedules');
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
@@ -29,6 +30,7 @@ app.use('/people', peopleRouter);
 app.use('/accounts', accountsRouter);
 app.use('/cashFlowDescriptions', cashFlowDescriptionsRouter);
 app.use('/cashFlows', cashFlowsRouter);
+app.use('/cashFlowSchedules', cashFlowSchedulesRouter);
 
 router.get('/', (req, res) => {
   res.send('index test');
