@@ -26,7 +26,12 @@ firebase apps:sdkconfig WEB {app-id}
 ### Need config firebase settings used in cash-flow-api
 
 firebase functions:config:set cashflowapi.firebase.apikey=firebase-apikey
-firebase functions:config:set cashflowapi.firebase.projectid="firebase-projectid"
+firebase functions:config:set cashflowapi.firebase.projectid=firebase-projectid
+firebase functions:config:set cashflowapi.firebase.databaseurl=firebase-databaseurl
+
+### Generate serviceAccountKey.json
+
+https://console.firebase.google.com/u/1/project/cash-f{project-id}/settings/serviceaccounts/adminsdk
 
 ### Command to view current config
 
