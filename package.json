@@ -42,7 +42,6 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-validation": "^1.0.3",
-    "firebase": "^7.4.0",
     "firebase-admin": "^8.7.0",
     "firebase-functions": "^3.3.0",
     "http-status": "^1.4.1",

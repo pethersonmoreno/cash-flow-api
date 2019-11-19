@@ -1,10 +1,11 @@
 require('module-alias/register');
-const firebase = require('firebase/app');
-require('firebase/firestore');
+const admin = require('firebase-admin');
 require('dotenv').config();
 const express = require('express');
 require('express-async-errors');
 const bodyParser = require('body-parser');
+
+const serviceAccount = require('../serviceAccountKey.json');
 
 const corsMiddleware = require('./middlewares/corsMiddleware');
 const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
@@ -17,9 +18,9 @@ const cashFlowDescriptionsRouter = require('./APIs/cashFlowDescriptions');
 const cashFlowsRouter = require('./APIs/cashFlows');
 const cashFlowSchedulesRouter = require('./APIs/cashFlowSchedules');
 
-firebase.initializeApp({
-  apiKey: process.env.FIREBASE_API_KEY,
-  projectId: process.env.FIREBASE_PROJECT_ID
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_DATABASE_URL
 });
 
 const app = express();

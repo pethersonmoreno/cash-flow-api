@@ -1,5 +1,5 @@
-const firebase = require('firebase/app');
+const admin = require('firebase-admin');
 
-const getCollection = collection => firebase.firestore().collection(collection);
+const getCollection = collection => admin.firestore().collection(collection);
 
 module.exports = getCollection;
