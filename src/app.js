@@ -6,6 +6,7 @@ const express = require('express');
 require('express-async-errors');
 const bodyParser = require('body-parser');
 
+const corsMiddleware = require('./middlewares/corsMiddleware');
 const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
 const errorConverterMiddleware = require('./middlewares/errorConverterMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
@@ -23,6 +24,8 @@ firebase.initializeApp({
 
 const app = express();
 const router = express.Router();
+
+app.use(corsMiddleware);
 
 app.use(bodyParser.json());
 
