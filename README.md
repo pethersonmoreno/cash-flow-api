@@ -31,7 +31,7 @@ firebase functions:config:set cashflowapi.firebase.databaseurl=firebase-database
 
 ### Generate serviceAccountKey.json
 
-https://console.firebase.google.com/u/1/project/cash-f{project-id}/settings/serviceaccounts/adminsdk
+https://console.firebase.google.com/u/0/project/{project-id}/settings/serviceaccounts/adminsdk
 
 ### Command to view current config
 
