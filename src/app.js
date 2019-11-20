@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const serviceAccount = require('../serviceAccountKey.json');
 
 const corsMiddleware = require('./middlewares/corsMiddleware');
+const blockUnauthenticated = require('./middlewares/blockUnauthenticated');
 const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
 const errorConverterMiddleware = require('./middlewares/errorConverterMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
@@ -27,6 +28,7 @@ const app = express();
 const router = express.Router();
 
 app.use(corsMiddleware);
+app.use(blockUnauthenticated);
 
 app.use(bodyParser.json());
 
