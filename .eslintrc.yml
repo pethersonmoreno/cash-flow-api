@@ -21,3 +21,4 @@ rules:
   implicit-arrow-linebreak:
     - error
     - beside
+  require-atomic-updates: off
