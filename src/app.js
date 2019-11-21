@@ -9,6 +9,7 @@ const serviceAccount = require('../serviceAccountKey.json');
 
 const corsMiddleware = require('./middlewares/corsMiddleware');
 const blockUnauthenticated = require('./middlewares/blockUnauthenticated');
+const blockAuthenticatedInvalidEmail = require('./middlewares/blockAuthenticatedInvalidEmail');
 const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
 const errorConverterMiddleware = require('./middlewares/errorConverterMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
@@ -30,6 +31,18 @@ const router = express.Router();
 app.use(corsMiddleware);
 app.use(blockUnauthenticated);
 
+router.get('/isValidEmail', (req, res) => {
+  blockAuthenticatedInvalidEmail(req, res, error => {
+    res.json(!error);
+  });
+});
+router.get('/', (req, res) => {
+  res.send('index test');
+});
+app.use('/', router);
+
+app.use(blockAuthenticatedInvalidEmail);
+
 app.use(bodyParser.json());
 
 app.use('/people', peopleRouter);
@@ -37,11 +50,6 @@ app.use('/accounts', accountsRouter);
 app.use('/cashFlowDescriptions', cashFlowDescriptionsRouter);
 app.use('/cashFlows', cashFlowsRouter);
 app.use('/cashFlowSchedules', cashFlowSchedulesRouter);
-
-router.get('/', (req, res) => {
-  res.send('index test');
-});
-app.use('/', router);
 
 app.use(notFoundMiddleware);
 app.use(errorConverterMiddleware);
