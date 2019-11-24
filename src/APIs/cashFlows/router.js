@@ -36,7 +36,10 @@ router
   .delete(
     validate(validations.delete),
     controller.common.load('id'),
-    controller.common.delete
+    controller.loadCurrentAccount,
+    controller.updateAccountCurrentValue,
+    controller.common.delete,
+    controller.undoUpdateAccountCurrentValueOnError
   );
 
 module.exports = router;
