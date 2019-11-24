@@ -28,6 +28,11 @@ router
     controller.blockNotFoundAccount,
     controller.blockNotFoundCashFlowDescription,
     controller.common.replace
+  )
+  .delete(
+    validate(validations.delete),
+    controller.common.load('id'),
+    controller.common.delete
   );
 
 module.exports = router;
