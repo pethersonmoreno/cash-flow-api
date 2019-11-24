@@ -6,7 +6,8 @@ const ValidationError = require('../../../errors/ValidationError');
 const mapDocumentToData = require('../../../mappers/documentToData');
 const updateDocument = require('../../../helpers/firestore/updateDocument');
 
-const isUpdate = req => req.locals && req.locals[LOCAL_NAME];
+const isUpdate = req => req.method === 'PUT';
+const isDelete = req => req.method === 'DELETE';
 
 const isUpdateNotChangingValue = req => isUpdate(req) &&
   req.locals[LOCAL_NAME].value === req.body.value &&
@@ -34,33 +35,43 @@ const updateAccountCurrentValue = async (req, res, next) => {
     return next();
   }
   try {
-    const updated = isUpdate(req);
-    const changedAccountReference =
-      updated && req.locals[LOCAL_NAME].accountId !== req.body.accountId;
-
     const { account: accountCurrent } = req.locals;
-    const valueDiffCurrent =
-      req.body.value * (req.body.inOut === CashFlowInOutEnum.INPUT ? 1 : -1);
-    const valueDiffOld = updated
-      ? req.locals[LOCAL_NAME].value *
-        (req.locals[LOCAL_NAME].inOut === CashFlowInOutEnum.INPUT ? 1 : -1)
-      : 0;
-    if (changedAccountReference) {
-      const accountOld = await getOldAccountById(
-        req.locals[LOCAL_NAME].accountId
-      );
-      req.locals.accountOld = accountOld;
-      await updateDocument('accounts', accountOld.id, {
-        currentValue: accountOld.currentValue - valueDiffOld
-      });
+
+    if (isDelete(req)) {
+      const valueDiffCurrent =
+        req.locals[LOCAL_NAME].value *
+        (req.locals[LOCAL_NAME].inOut === CashFlowInOutEnum.INPUT ? 1 : -1);
       await updateDocument('accounts', accountCurrent.id, {
-        currentValue: accountCurrent.currentValue + valueDiffCurrent
+        currentValue: accountCurrent.currentValue - valueDiffCurrent
       });
     } else {
-      const valueDiff = valueDiffCurrent - valueDiffOld;
-      await updateDocument('accounts', accountCurrent.id, {
-        currentValue: accountCurrent.currentValue + valueDiff
-      });
+      const valueDiffCurrent =
+        req.body.value * (req.body.inOut === CashFlowInOutEnum.INPUT ? 1 : -1);
+
+      const updated = isUpdate(req);
+      const changedAccountReference =
+        updated && req.locals[LOCAL_NAME].accountId !== req.body.accountId;
+      const valueDiffOld = updated
+        ? req.locals[LOCAL_NAME].value *
+          (req.locals[LOCAL_NAME].inOut === CashFlowInOutEnum.INPUT ? 1 : -1)
+        : 0;
+      if (changedAccountReference) {
+        const accountOld = await getOldAccountById(
+          req.locals[LOCAL_NAME].accountId
+        );
+        req.locals.accountOld = accountOld;
+        await updateDocument('accounts', accountOld.id, {
+          currentValue: accountOld.currentValue - valueDiffOld
+        });
+        await updateDocument('accounts', accountCurrent.id, {
+          currentValue: accountCurrent.currentValue + valueDiffCurrent
+        });
+      } else {
+        const valueDiff = valueDiffCurrent - valueDiffOld;
+        await updateDocument('accounts', accountCurrent.id, {
+          currentValue: accountCurrent.currentValue + valueDiff
+        });
+      }
     }
     req.locals.updatedAccount = true;
     return next();
