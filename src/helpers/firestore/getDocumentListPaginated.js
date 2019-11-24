@@ -1,7 +1,19 @@
 const getCollection = require('./getCollection');
 
-const getDocumentListPaginated = async (collationName, page, perPage) => {
-  const query = getCollection(collationName);
+const getDocumentListPaginated = async (
+  collationName,
+  page,
+  perPage,
+  orderBy,
+  orderByDirection
+) => {
+  let query = getCollection(collationName);
+  if (orderBy) {
+    query = query.orderBy(
+      orderBy,
+      orderByDirection === 'desc' ? 'desc' : 'asc'
+    );
+  }
   const skip = perPage * (page - 1);
   if (skip > 0) {
     const firstDocsSnapshots = await query.limit(skip).get();
