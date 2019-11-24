@@ -5,6 +5,7 @@ const createListController = require('./createListController');
 const createGetItemController = require('./createGetItemController');
 const createCreateController = require('./createCreateController');
 const createReplaceController = require('./createReplaceController');
+const createDeleteController = require('./createDeleteController');
 
 const createCommonControllers = (
   collationName,
@@ -30,12 +31,14 @@ const createCommonControllers = (
     localName,
     mapDataToDocument
   );
+  const deleteController = createDeleteController(collationName, localName);
   return {
     load,
     list,
     get,
     create,
-    replace
+    replace,
+    delete: deleteController
   };
 };
 

@@ -21,6 +21,12 @@ router
     validate(validations.replace),
     controller.common.load('id'),
     controller.common.replace
+  )
+  .delete(
+    validate(validations.delete),
+    controller.common.load('id'),
+    controller.blockUsedPerson,
+    controller.common.delete
   );
 
 module.exports = router;
