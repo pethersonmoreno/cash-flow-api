@@ -28,21 +28,26 @@ admin.initializeApp({
 const app = express();
 const router = express.Router();
 
-app.use(corsMiddleware);
-app.use(blockUnauthenticated);
+const securityActive = true;
 
-router.get('/isValidEmail', (req, res) => {
-  blockAuthenticatedInvalidEmail(req, res, error => {
-    res.json(!error);
+if (securityActive) {
+  app.use(corsMiddleware);
+  app.use(blockUnauthenticated);
+
+  router.get('/isValidEmail', (req, res) => {
+    blockAuthenticatedInvalidEmail(req, res, error => {
+      res.json(!error);
+    });
   });
-});
+}
 router.get('/', (req, res) => {
   res.send('index test');
 });
 app.use('/', router);
 
-app.use(blockAuthenticatedInvalidEmail);
-
+if (securityActive) {
+  app.use(blockAuthenticatedInvalidEmail);
+}
 app.use(bodyParser.json());
 
 app.use('/people', peopleRouter);
