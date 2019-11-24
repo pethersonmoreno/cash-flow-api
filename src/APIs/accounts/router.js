@@ -26,6 +26,12 @@ router
     controller.common.load('id'),
     controller.blockNotFoundPerson,
     controller.common.replace
+  )
+  .delete(
+    validate(validations.delete),
+    controller.common.load('id'),
+    controller.blockUsedAccount,
+    controller.common.delete
   );
 
 module.exports = router;
