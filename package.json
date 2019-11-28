@@ -12,6 +12,7 @@
     "shell": "firebase functions:shell",
     "predeploy": "npm run lint",
     "deploy:all": "firebase deploy",
+    "deploy:firestore": "firebase deploy --only firestore",
     "deploy:functions": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
