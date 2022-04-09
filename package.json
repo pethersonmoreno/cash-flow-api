@@ -47,7 +47,7 @@
     "firebase-functions": "^3.3.0",
     "http-status": "^1.4.1",
     "module-alias": "^2.2.2",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "_moduleAliases": {
     "joi": "joi"
